@@ -2,3 +2,12 @@
 {
     margin: 0 100px;
 }
+
+.initGame{
+    display:none;
+}
+
+.active
+{
+    display: block;
+}
