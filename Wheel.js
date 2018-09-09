@@ -67,40 +67,48 @@ $resetBtn.click(function () {
     window.location.href = "wheel.html";
 });
 
-
+//*** Since alphabetBox class is created dynamically, when binding click event, it will not work *//
+// Solution : user <parent>.on(<event>, <className>,function(){})
 $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
     debugger
-    if ($(this).attr('class') == "clicked")
-        alert("Already clicked");
+    //return if already clicked
+    if ($(this).hasClass('clicked'))
+    {
+        alert("Already selected");
+        return
+    }
+
+    //When select, change letter button to gray
     $(this).addClass('clicked');
-});
 
-// $('.alphabetBox').on("click", function(event){
-//     debugger
-//     $(this).addClass('clicked');
-// });
+    //Save letter to compare
+    var selectedLetter = $(this).text();
+    // alert(temp);
 
-// $alphabetBoxes.click(function(){
-//     $(this).addClass('click');
-// });
-
-
-$guessBtn.click(function () {
-    var chars = $inputText.val().toUpperCase();
-
-    $('.letterBox').each(function () {
-        // console.log($(this).text() )
-        var boxLetter = $(this).text();
-
-        for (var k = 0; k <= chars.length; k++) {
-            if (chars[k] == boxLetter) {
-                $(this).addClass('letterFound');
-            }
-        }
-
+    //compare saved letter to answer, if found, change letterBox to gray and reveal the letter
+    $('.letterBox').each(function (){
+        if ($(this).text() == selectedLetter)
+        $(this).addClass('letterFound');
     });
-
 });
+
+
+// $guessBtn.click(function () {
+//     var chars = $inputText.val().toUpperCase();
+
+//     $('.letterBox').each(function () {
+//         // console.log($(this).text() )
+//         var boxLetter = $(this).text();
+
+//         for (var k = 0; k <= chars.length; k++) {
+//             if (chars[k] == boxLetter) {
+//                 $(this).addClass('letterFound');
+//             }
+//         }
+
+//     });
+
+// });
 
 
 ///////-------FUNCTIONS-------////////
