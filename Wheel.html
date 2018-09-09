@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Wheel</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="wheel.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+        crossorigin="anonymous">
+</head>
+
+<body>
+
+    <!-- jumbotron -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="text-white">Wheel</h1>
+        </div>
+    </div>
+
+    <!-- Main body -->
+    <div class="customContainer">
+        <!-- Start/Reset buttons -->
+        <div class="container-fluid ">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <button class="btn btn-block btn-primary">Start</button>
+                </div>
+                <div class="col-md-6 ">
+                    <button class="btn btn-block btn-danger">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question Box -->
+        <div class="container-fluid mt-5 initGame">
+            <div class="alert alert-dismissible alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Question: </strong>
+                <div class="questionHolder">Sample questionSample questionSample questionSamplequ estionSam plequestionSamplequestion SamplequestionSa
+                    mplequestio nSample questionSample questionSample questionSample questionSample questionSample questionSample
+                    question</div>
+            </div>
+        </div>
+
+        <!-- Generated Boxes -->
+        <div class="container-fluid initGame">
+            <div class="letterBoxesHolder">
+            </div>
+        </div>
+
+        <!-- Guess letters -->
+        <div class="container-fluid initGame">
+            <div class="row">
+                <div class="input-group col-md-6">
+                    <input class="form-control py-2" placeholder="Please guess 5 letters">
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
+                            OK
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guessed Letters -->
+        <div class="container-fluid mt-5 initGame">
+                <div class="alert alert-dismissible alert-dark">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Guess letters: </strong>
+                    <div class="guessLetterHolder"></div>
+                </div>
+            </div>
+
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
+    <script src="wheel.js"></script>
+</body>
+
+</html>
