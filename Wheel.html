@@ -41,32 +41,51 @@
             <div class="alert alert-dismissible alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Question: </strong>
-                <div id="questionHolder">Sample questionSample questionSample questionSamplequ estionSam plequestionSamplequestion SamplequestionSa
-                    mplequestio nSample questionSample questionSample questionSample questionSample questionSample questionSample
-                    question</div>
+                <div id="questionHolder"></div>
             </div>
         </div>
 
         <!-- Generated Boxes -->
         <div class="container-fluid initGame">
-            <div id="letterBoxesHolder">
+        <div class="d-flex flex-row" id="letterBoxesHolder">
+                <!-- <div class="letterBox">a</div>
+                <div class="letterBox">b</div>
+                <div class="letterBox">b</div>
+                <div class="letterBoxSpace"></div>
+                <div class="letterBox">p</div> -->
+              </div>
             </div>
-        </div>
+
+                    <!-- Prompt Box -->
+        <div class="container-fluid mt-5 initGame">
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Round 1: </strong>
+                    <div id="promptHolder"></div>
+                </div>
+            </div>
 
         <!-- Guess letters -->
-        <div class="container-fluid initGame">
+        <!-- <div class="container-fluid initGame">
             <div class="row">
                 <div class="input-group col-md-6">
-                    <input class="form-control py-2" placeholder="Please guess 5 letters">
+                    <input class="form-control py-2" placeholder="Please guess 5 letters" id="inputText">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">
+                        <button class="btn btn-outline-secondary" type="button" id="guessBtn">
                             OK
                         </button>
                     </span>
                 </div>
             </div>
-        </div>
+        </div> -->
 
+
+        <div class="container-fluid initGame">
+                <div class="d-flex flex-row" id="alphabetBoxesHolder">   
+
+                </div>
+
+        </div>
         <!-- Guessed Letters -->
         <div class="container-fluid mt-5 initGame">
                 <div class="alert alert-dismissible alert-dark">

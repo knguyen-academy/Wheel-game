@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 .customContainer
 {
     margin: 0 100px;
@@ -31,4 +34,25 @@
 {
     font-size: 50px;
     background: gray;
+}
+
+.alphabetBox
+{
+    border-radius: 5px;
+    border: 1px solid;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.alphabetBox:hover{
+    cursor: pointer;
+    background: gray;
+
+}
+
+.click
+{
+    background: gray;
+    color: white;
 }
