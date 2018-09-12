@@ -6,6 +6,7 @@ var $guessBtn = $('#guessBtn');
 var $inputText = $('#inputText');
 var $alphabetBoxesHolder = $('#alphabetBoxesHolder');
 var $promptHolder = $('#promptHolder');
+var $card =$('.card');
 var answer_length, answer_length_nospace=0, answer;
 var max_prize = 20000;
 var prize, round = 0;
@@ -78,10 +79,11 @@ $resetBtn.click(function () {
 });
 
 
+
 //*** Since alphabetBox class is created dynamically, when binding click event, it will not work *//
 // Solution : user <parent>.on(<event>, <className>,function(){})
 $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
-
+    debugger
     //return if already clicked
     if ($(this).hasClass('clicked')) {
         alert("Already selected");
@@ -123,11 +125,15 @@ $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
         $promptHolder.html("Congratz !! You won :" + prize);
         $('.letterBox').addClass('finishGame');
     }
-    // console.log(letterFoundCount);
-    // console.log(answer_length_nospace);
+    console.log(letterFoundCount);
+    console.log(answer_length_nospace);
 
 });
 
+$('#letterBoxesHolder').on('click', '.card', function () {
+    debugger
+    $(this).toggleClass('flipped');
+});
 
 $guessBtn.click(function () {
     debugger
@@ -149,8 +155,15 @@ function genBoxes() {
     for (var i = 0; i < answer_length; i++) {
 
         if (answer[i] != " ") {
-            var $newBoxDiv = $("<div class='letterBox'></div> ").text(answer[i].toUpperCase());
-            answer_length_nospace++;
+            var letter = answer[i].toUpperCase();
+                   // var $newBoxDiv = $("<div class='letterBox'></div> ").text(answer[i].toUpperCase());
+            //  var $newBoxDiv = $("<div class ='flip-container'> <div class='card'> <div class='front'></div> <div class='letterBox back'></div></div></div> ");
+            var $newBoxDiv ="<div class ='flip-container'>"+
+                            "<div class='card'>" +
+                            "<div class='letterBox front'>"+letter+"</div>" +
+                            "<div class='letterBox back'>" +letter+"</div>"+
+                            "</div></div>";
+               answer_length_nospace++;
         }
         else {
             // if asnwer character is space, then generate blank box
@@ -158,8 +171,7 @@ function genBoxes() {
         }
         //append to DIV
         $letterBoxesHolder.append($newBoxDiv);
-
-
+        
     }
 
 }
@@ -171,11 +183,16 @@ function genAlphabet() {
     }
 }
 
-function calPoints(round, prize) {
-    var prize = 0;
-    if (round == 0)
-        prize = max_prize;
-    else
-        prize = max_prize - (round * 100);
-    return prize;
-}
+// function calPoints(round, prize) {
+//     var prize = 0;
+//     if (round == 0)
+//         prize = max_prize;
+//     else
+//         prize = max_prize - (round * 100);
+//     return prize;
+// }
+
+// function flip() {
+//     $('.card').toggleClass('flipped');
+// }
+
