@@ -40,9 +40,10 @@
 {
     border-radius: 5px;
     border: 1px solid;
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
     text-align: center;
+    vertical-align: center;
 }
 
 .alphabetBox:hover{

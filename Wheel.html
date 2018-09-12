@@ -28,10 +28,10 @@
         <div class="container-fluid ">
             <div class="row">
                 <div class="col-md-6 ">
-                    <button class="btn btn-block btn-primary" id ="startBtn">Start</button>
+                    <button class="btn btn-block btn-primary" id="startBtn">Start</button>
                 </div>
                 <div class="col-md-6 ">
-                    <button class="btn btn-block btn-danger" id ="resetBtn">Reset</button>
+                    <button class="btn btn-block btn-danger" id="resetBtn">Reset</button>
                 </div>
             </div>
         </div>
@@ -47,29 +47,35 @@
 
         <!-- Generated Boxes -->
         <div class="container-fluid initGame">
-        <div class="d-flex flex-row" id="letterBoxesHolder">
+            <div class="d-flex flex-row" id="letterBoxesHolder">
                 <!-- <div class="letterBox">a</div>
                 <div class="letterBox">b</div>
                 <div class="letterBox">b</div>
                 <div class="letterBoxSpace"></div>
                 <div class="letterBox">p</div> -->
-              </div>
             </div>
+        </div>
 
-                    <!-- Prompt Box -->
+        <!-- Prompt Box -->
         <div class="container-fluid mt-5 initGame">
-                <div class="alert alert-dismissible alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Round 1: </strong>
-                    <div id="promptHolder"></div>
-                </div>
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Guess now Prize: </strong>
+                <span id="promptHolder"></span>
             </div>
+        </div>
 
-        <!-- Guess letters -->
-        <!-- <div class="container-fluid initGame">
+        <!-- Alphabet Buttons -->
+        <div class="container-fluid initGame mt-5">
+            <div class="d-flex flex-row" id="alphabetBoxesHolder">
+            </div>
+        </div>
+
+        <!-- Guess Words -->
+        <div class="container-fluid initGame mt-5">
             <div class="row">
                 <div class="input-group col-md-6">
-                    <input class="form-control py-2" placeholder="Please guess 5 letters" id="inputText">
+                    <input class="form-control py-2" placeholder="Guess the words" id="inputText">
                     <span class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="guessBtn">
                             OK
@@ -77,23 +83,16 @@
                     </span>
                 </div>
             </div>
-        </div> -->
-
-
-        <div class="container-fluid initGame">
-                <div class="d-flex flex-row" id="alphabetBoxesHolder">   
-
-                </div>
-
         </div>
+
         <!-- Guessed Letters -->
         <div class="container-fluid mt-5 initGame">
-                <div class="alert alert-dismissible alert-dark">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Guess letters: </strong>
-                    <div class="guessLetterHolder"></div>
-                </div>
+            <div class="alert alert-dismissible alert-dark">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Guess letters: </strong>
+                <div class="guessLetterHolder"></div>
             </div>
+        </div>
 
     </div>
     <!-- Optional JavaScript -->

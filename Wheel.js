@@ -5,9 +5,10 @@ var $letterBoxesHolder = $('#letterBoxesHolder');
 var $guessBtn = $('#guessBtn');
 var $inputText = $('#inputText');
 var $alphabetBoxesHolder = $('#alphabetBoxesHolder');
-// var $alphabetBoxes = $('#alphabetBoxesHolder div');
-
+var $promptHolder = $('#promptHolder');
 var answer_length, answer;
+var max_prize = 20000;
+var prize, round = 0;
 
 //Read Json questions
 var xmlhttp = new XMLHttpRequest();
@@ -51,6 +52,11 @@ xmlhttp.send();
 
 
 $startBtn.click(function () {
+    //Init
+    prize = max_prize;
+    $promptHolder.html(prize);
+
+    //init elements
     $('.initGame').addClass("active");
 
     //Generate alphabetLetters
@@ -67,13 +73,13 @@ $resetBtn.click(function () {
     window.location.href = "wheel.html";
 });
 
+
 //*** Since alphabetBox class is created dynamically, when binding click event, it will not work *//
 // Solution : user <parent>.on(<event>, <className>,function(){})
 $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
-    debugger
+
     //return if already clicked
-    if ($(this).hasClass('clicked'))
-    {
+    if ($(this).hasClass('clicked')) {
         alert("Already selected");
         return
     }
@@ -83,32 +89,53 @@ $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
 
     //Save letter to compare
     var selectedLetter = $(this).text();
-    // alert(temp);
+
+    // flag used to determine the point deduction, if flag = true, means found, flag = false means not found
+    var flag = false;
 
     //compare saved letter to answer, if found, change letterBox to gray and reveal the letter
-    $('.letterBox').each(function (){
-        if ($(this).text() == selectedLetter)
-        $(this).addClass('letterFound');
+    $('.letterBox').each(function () {
+
+
+        //Loop through all letter Box, if found letter, reveal it
+        if ($(this).text() == selectedLetter) {
+            //reveal letter
+            $(this).addClass('letterFound')
+            // change flag = true if found
+            flag = true;
+        }
     });
+
+    //if loops through and letter not matched, change flag = false to deduct point for each guess
+    if (flag == false) {
+        prize -= 300;
+        $promptHolder.html(prize);
+    }
 });
 
 
-// $guessBtn.click(function () {
-//     var chars = $inputText.val().toUpperCase();
+$guessBtn.click(function () {
+    debugger
+    var guessWords = $inputText.val().toUpperCase();
+    var upperCaseAnswer = answer.toUpperCase();
+    if (guessWords == upperCaseAnswer) {
+        $promptHolder.html(prize);
+    }
+    else
+        alert("not corect");
+    // $('.letterBox').each(function () {
+    //     // console.log($(this).text() )
+    //     var boxLetter = $(this).text();
 
-//     $('.letterBox').each(function () {
-//         // console.log($(this).text() )
-//         var boxLetter = $(this).text();
+    //     for (var k = 0; k <= chars.length; k++) {
+    //         if (chars[k] == boxLetter) {
+    //             $(this).addClass('letterFound');
+    //         }
+    //     }
 
-//         for (var k = 0; k <= chars.length; k++) {
-//             if (chars[k] == boxLetter) {
-//                 $(this).addClass('letterFound');
-//             }
-//         }
+    // });
 
-//     });
-
-// });
+});
 
 
 ///////-------FUNCTIONS-------////////
@@ -132,4 +159,13 @@ function genAlphabet() {
         var $alphabetBox = $("<div class='alphabetBox'></div>").text((i + 10).toString(36).toUpperCase());
         $alphabetBoxesHolder.append($alphabetBox);
     }
+}
+
+function calPoints(round, prize) {
+    var prize = 0;
+    if (round == 0)
+        prize = max_prize;
+    else
+        prize = max_prize - (round * 100);
+    return prize;
 }
