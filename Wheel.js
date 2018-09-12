@@ -6,10 +6,10 @@ var $guessBtn = $('#guessBtn');
 var $inputText = $('#inputText');
 var $alphabetBoxesHolder = $('#alphabetBoxesHolder');
 var $promptHolder = $('#promptHolder');
-var answer_length, answer;
+var answer_length, answer_length_nospace=0, answer;
 var max_prize = 20000;
 var prize, round = 0;
-
+var letterFoundCount = 0;
 //Read Json questions
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function () {
@@ -50,9 +50,13 @@ xmlhttp.send();
 /////////////////////////////
 
 
-
+///INIT GAME
 $startBtn.click(function () {
-    //Init
+
+    if ($('.initGame').hasClass('active'))
+    return;
+
+    //Init prize
     prize = max_prize;
     $promptHolder.html(prize);
 
@@ -103,6 +107,7 @@ $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
             $(this).addClass('letterFound')
             // change flag = true if found
             flag = true;
+            letterFoundCount++;
         }
     });
 
@@ -111,6 +116,16 @@ $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
         prize -= 300;
         $promptHolder.html(prize);
     }
+
+    
+    //If guess the last char
+    if (letterFoundCount == answer_length_nospace) {
+        $promptHolder.html("Congratz !! You won :" + prize);
+        $('.letterBox').addClass('finishGame');
+    }
+    // console.log(letterFoundCount);
+    // console.log(answer_length_nospace);
+
 });
 
 
@@ -118,23 +133,13 @@ $guessBtn.click(function () {
     debugger
     var guessWords = $inputText.val().toUpperCase();
     var upperCaseAnswer = answer.toUpperCase();
+    
     if (guessWords == upperCaseAnswer) {
-        $promptHolder.html(prize);
+        var bonus = prize + 500;
+        $promptHolder.html("CONGRATZ!!! YOU WON PRIZE + Bonus. You go home with " + bonus);
     }
     else
-        alert("not corect");
-    // $('.letterBox').each(function () {
-    //     // console.log($(this).text() )
-    //     var boxLetter = $(this).text();
-
-    //     for (var k = 0; k <= chars.length; k++) {
-    //         if (chars[k] == boxLetter) {
-    //             $(this).addClass('letterFound');
-    //         }
-    //     }
-
-    // });
-
+    $promptHolder.html("WRONG GUESS !!! PLAY AGAIN");
 });
 
 
@@ -143,13 +148,18 @@ $guessBtn.click(function () {
 function genBoxes() {
     for (var i = 0; i < answer_length; i++) {
 
-        if (answer[i] != " ")
+        if (answer[i] != " ") {
             var $newBoxDiv = $("<div class='letterBox'></div> ").text(answer[i].toUpperCase());
-        else
+            answer_length_nospace++;
+        }
+        else {
             // if asnwer character is space, then generate blank box
             var $newBoxDiv = $("<div class='letterBoxSpace'></div>");
+        }
         //append to DIV
         $letterBoxesHolder.append($newBoxDiv);
+
+
     }
 
 }
