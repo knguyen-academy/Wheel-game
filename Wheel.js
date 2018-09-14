@@ -1,4 +1,3 @@
-
 var $startBtn = $('#startBtn');
 var $resetBtn = $('#resetBtn');
 var $questionHolder = $('#questionHolder');
@@ -7,11 +6,15 @@ var $guessBtn = $('#guessBtn');
 var $inputText = $('#inputText');
 var $alphabetBoxesHolder = $('#alphabetBoxesHolder');
 var $promptHolder = $('#promptHolder');
-var $card =$('.card');
-var answer_length, answer_length_nospace=0, answer;
+var $card = $('.card');
+var answer_length, answer_length_nospace = 0, answer;
 var max_prize = 20000;
 var prize, round = 0;
 var letterFoundCount = 0;
+
+
+
+
 //Read Json questions
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function () {
@@ -56,7 +59,7 @@ xmlhttp.send();
 $startBtn.click(function () {
 
     if ($('.initGame').hasClass('active'))
-    return;
+        return;
 
     //Init prize
     prize = max_prize;
@@ -71,6 +74,7 @@ $startBtn.click(function () {
     //Generate # boxes base on answer-length
     genBoxes();
 
+
 });
 
 
@@ -84,6 +88,7 @@ $resetBtn.click(function () {
 //*** Since alphabetBox class is created dynamically, when binding click event, it will not work *//
 // Solution : user <parent>.on(<event>, <className>,function(){})
 $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
+
     
     //return if already clicked
     if ($(this).hasClass('clicked')) {
@@ -97,59 +102,83 @@ $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
     //Save letter to compare
     var selectedLetter = $(this).text();
 
-    // flag used to determine the point deduction, if flag = true, means found, flag = false means not found
-    var flag = false;
-    
+    // flag used to determine the point deduction, if point_flag = true, means found, point_flag = false means not found
+    var point_flag = false;
+
+
     //compare saved letter to answer, if found, change letterBox to gray and reveal the letter
     $('.letterBox').each(function () {
 
 
         //Loop through all letter Box, if found letter, reveal it
         if ($(this).text() == selectedLetter) {
-            //reveal letter
-            $(this).addClass('letterFound')
-            // change flag = true if found
-            flag = true;
-            letterFoundCount++;
+            $(this).addClass('letterFound');  //reveal letter
+            $(this).parents().addClass('flipEnable');
+            point_flag = true;    // change flag = true if found
+ 
+            letterFoundCount++; // use to determine last guess char
         }
     });
 
-    //if loops through and letter not matched, change flag = false to deduct point for each guess
-    if (flag == false) {
+    //if loops through and letter not matched, change point_flag = false to deduct point for each guess
+    if (point_flag == false) {
         prize -= 300;
-        $promptHolder.html(prize);
+        $promptHolder.html("<font color='red'>" + prize + "</font>");
     }
 
-    var letterFoundCountHalf = letterFoundCount/2; //divide by 2 because letterBox is twice (from front and back)
+    var letterFoundCountHalf = letterFoundCount / 2; //divide by 2 because letterBox is twice (from front and back)
 
     //If guess the last char, if correct, auto flip the remaining boxes and change color to blue
     if (letterFoundCountHalf == answer_length_nospace) {
         $promptHolder.html("Congratz !! You won: " + prize);
+        //flips all 
         $('.card').addClass('flipped');
+        //change color
         $('.back').addClass('finishGame');
-        
+
     }
+
+
     // console.log(letterFoundCountHalf);
     // console.log(answer_length_nospace);
 
 });
 
-$('#letterBoxesHolder').on('click', '.card', function () {
+//when click on card
+// $('#letterBoxesHolder').on('click', '.card', function () {
+//     if (flip_flag == true){
+//         $(this).toggleClass('flipped');
+//     }
     
-    $(this).toggleClass('flipped');
+//     // if ($(this).hasClass('bu'))
+//     // flip_flag = true;
+//     //reset flip_flag
+//     flip_flag = false;
+// });
+
+//when click on card
+$('#letterBoxesHolder').on('click', '.card', function () {
+    if ($(this).hasClass('flipEnable')){
+        $(this).toggleClass('flipped');
+    }
+
 });
 
 $guessBtn.click(function () {
-    
+
     var guessWords = $inputText.val().toUpperCase();
     var upperCaseAnswer = answer.toUpperCase();
-    
+
     if (guessWords == upperCaseAnswer) {
         var bonus = prize + 500;
         $promptHolder.html("CONGRATZ!!! YOU WON PRIZE + Bonus. You go home with " + bonus);
+        //Flips all
+        $('.card').addClass('flipped');
+        //Change color
+        $('.back').addClass('finishGame');
     }
     else
-    $promptHolder.html("WRONG GUESS !!! PLAY AGAIN");
+        $promptHolder.html("WRONG GUESS !!! PLAY AGAIN");
 });
 
 
@@ -160,14 +189,14 @@ function genBoxes() {
 
         if (answer[i] != " ") {
             var letter = answer[i].toUpperCase();
-                   // var $newBoxDiv = $("<div class='letterBox'></div> ").text(answer[i].toUpperCase());
+            // var $newBoxDiv = $("<div class='letterBox'></div> ").text(answer[i].toUpperCase());
             //  var $newBoxDiv = $("<div class ='flip-container'> <div class='card'> <div class='front'></div> <div class='letterBox back'></div></div></div> ");
-            var $newBoxDiv ="<div class ='flip-container'>"+
-                            "<div class='card'>" +
-                            "<div class='letterBox front'>"+letter+"</div>" +   //need letterbox class because the front is visible when click, front font size =0 to hide the char
-                            "<div class='letterBox back'>" +letter+"</div>"+
-                            "</div></div>";
-               answer_length_nospace++;
+            var $newBoxDiv = "<div class ='flip-container'>" +
+                "<div class='card'>" +
+                "<div class='letterBox front'>" + letter + "</div>" +   //need letterbox class because the front is visible when click, front font size =0 to hide the char
+                "<div class='letterBox back'>" + letter + "</div>" +
+                "</div></div>";
+            answer_length_nospace++;
         }
         else {
             // if asnwer character is space, then generate blank box
@@ -175,7 +204,7 @@ function genBoxes() {
         }
         //append to DIV
         $letterBoxesHolder.append($newBoxDiv);
-        
+
     }
 
 }
