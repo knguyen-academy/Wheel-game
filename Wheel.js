@@ -1,3 +1,4 @@
+
 var $startBtn = $('#startBtn');
 var $resetBtn = $('#resetBtn');
 var $questionHolder = $('#questionHolder');
@@ -83,7 +84,7 @@ $resetBtn.click(function () {
 //*** Since alphabetBox class is created dynamically, when binding click event, it will not work *//
 // Solution : user <parent>.on(<event>, <className>,function(){})
 $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
-    debugger
+    
     //return if already clicked
     if ($(this).hasClass('clicked')) {
         alert("Already selected");
@@ -98,7 +99,7 @@ $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
 
     // flag used to determine the point deduction, if flag = true, means found, flag = false means not found
     var flag = false;
-
+    
     //compare saved letter to answer, if found, change letterBox to gray and reveal the letter
     $('.letterBox').each(function () {
 
@@ -119,24 +120,27 @@ $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
         $promptHolder.html(prize);
     }
 
-    
-    //If guess the last char
-    if (letterFoundCount == answer_length_nospace) {
-        $promptHolder.html("Congratz !! You won :" + prize);
-        $('.letterBox').addClass('finishGame');
+    var letterFoundCountHalf = letterFoundCount/2; //divide by 2 because letterBox is twice (from front and back)
+
+    //If guess the last char, if correct, auto flip the remaining boxes and change color to blue
+    if (letterFoundCountHalf == answer_length_nospace) {
+        $promptHolder.html("Congratz !! You won: " + prize);
+        $('.card').addClass('flipped');
+        $('.back').addClass('finishGame');
+        
     }
-    console.log(letterFoundCount);
-    console.log(answer_length_nospace);
+    // console.log(letterFoundCountHalf);
+    // console.log(answer_length_nospace);
 
 });
 
 $('#letterBoxesHolder').on('click', '.card', function () {
-    debugger
+    
     $(this).toggleClass('flipped');
 });
 
 $guessBtn.click(function () {
-    debugger
+    
     var guessWords = $inputText.val().toUpperCase();
     var upperCaseAnswer = answer.toUpperCase();
     
@@ -160,7 +164,7 @@ function genBoxes() {
             //  var $newBoxDiv = $("<div class ='flip-container'> <div class='card'> <div class='front'></div> <div class='letterBox back'></div></div></div> ");
             var $newBoxDiv ="<div class ='flip-container'>"+
                             "<div class='card'>" +
-                            "<div class='letterBox front'>"+letter+"</div>" +
+                            "<div class='letterBox front'>"+letter+"</div>" +   //need letterbox class because the front is visible when click, front font size =0 to hide the char
                             "<div class='letterBox back'>" +letter+"</div>"+
                             "</div></div>";
                answer_length_nospace++;
@@ -195,4 +199,3 @@ function genAlphabet() {
 // function flip() {
 //     $('.card').toggleClass('flipped');
 // }
-

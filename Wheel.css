@@ -33,7 +33,7 @@
 .letterFound
 {
     font-size: 50px;
-    background: gray !important;
+    background: #2ECC40 !important;
 }
 
 .alphabetBox
@@ -54,13 +54,13 @@
 
 .clicked
 {
-    background: gray;
+    background: green;
     color: white;
 }
 
 .finishGame
 {
-    background: greenyellow;
+    background: #0074D9 !important;
     color: red;
 }
 
@@ -104,7 +104,7 @@
     backface-visibility: hidden;
 }
 .card .front {
-  background: red;
+  background: #DDDDDD;
   font-size: 0;
 }
 .card .back {
