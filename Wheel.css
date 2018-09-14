@@ -62,8 +62,23 @@
 {
     background: #0074D9 !important;
     color: red;
+    /* Added this for blinking */
+    -webkit-animation: Blink 1s infinite;  /* Safari 4+ */
+    -moz-animation: Blink 1s infinite;  /* Fx 5+ */
+    -o-animation: Blink 1s infinite;  /* Opera 12+ */
+    animation: Blink 1s infinite;  /* IE 10+, Fx 29+ */
 }
 
+@-webkit-keyframes Blink {
+    0%, 49% {
+      background-color: #0074D9;
+      border: 3px solid #7FDBFF;;
+    }
+    50%, 100% {
+      background-color: #7FDBFF;
+      border: 3px solid #0074D9;
+    }
+  }
 
 .flip-container {
     width: 100px;

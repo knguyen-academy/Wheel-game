@@ -1,3 +1,4 @@
+
 var $startBtn = $('#startBtn');
 var $resetBtn = $('#resetBtn');
 var $questionHolder = $('#questionHolder');
@@ -11,8 +12,6 @@ var answer_length, answer_length_nospace = 0, answer;
 var max_prize = 20000;
 var prize, round = 0;
 var letterFoundCount = 0;
-
-
 
 
 //Read Json questions
@@ -63,7 +62,7 @@ $startBtn.click(function () {
 
     //Init prize
     prize = max_prize;
-    $promptHolder.html(prize);
+    $promptHolder.html("<font color='blue'> '<strong> $"+ convertToCur(prize)+" plus bonus(500)</strong> </font> ");
 
     //init elements
     $('.initGame').addClass("active");
@@ -89,7 +88,6 @@ $resetBtn.click(function () {
 // Solution : user <parent>.on(<event>, <className>,function(){})
 $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
 
-    
     //return if already clicked
     if ($(this).hasClass('clicked')) {
         alert("Already selected");
@@ -112,10 +110,10 @@ $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
 
         //Loop through all letter Box, if found letter, reveal it
         if ($(this).text() == selectedLetter) {
-            $(this).addClass('letterFound');  //reveal letter
-            $(this).parents().addClass('flipEnable');
+
+            $(this).addClass('letterFound');  //reveal letter, change bg to green
+            $(this).parents().addClass('flipEnable'); // allow to flip the card (letterBox -> Parent -> Card)
             point_flag = true;    // change flag = true if found
- 
             letterFoundCount++; // use to determine last guess char
         }
     });
@@ -123,14 +121,14 @@ $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
     //if loops through and letter not matched, change point_flag = false to deduct point for each guess
     if (point_flag == false) {
         prize -= 300;
-        $promptHolder.html("<font color='red'>" + prize + "</font>");
+        $promptHolder.html("<font color='red'> '<strong> $"+ convertToCur(prize)+"</strong> </font>");
     }
 
     var letterFoundCountHalf = letterFoundCount / 2; //divide by 2 because letterBox is twice (from front and back)
 
     //If guess the last char, if correct, auto flip the remaining boxes and change color to blue
     if (letterFoundCountHalf == answer_length_nospace) {
-        $promptHolder.html("Congratz !! You won: " + prize);
+        $promptHolder.html("Congraz!! You won: "+"<font color='blue'><strong> $"+ convertToCur(prize)+"</strong> </font>");
         //flips all 
         $('.card').addClass('flipped');
         //change color
@@ -144,21 +142,10 @@ $('#alphabetBoxesHolder').on('click', '.alphabetBox', function () {
 
 });
 
-//when click on card
-// $('#letterBoxesHolder').on('click', '.card', function () {
-//     if (flip_flag == true){
-//         $(this).toggleClass('flipped');
-//     }
-    
-//     // if ($(this).hasClass('bu'))
-//     // flip_flag = true;
-//     //reset flip_flag
-//     flip_flag = false;
-// });
 
 //when click on card
 $('#letterBoxesHolder').on('click', '.card', function () {
-    if ($(this).hasClass('flipEnable')){
+    if ($(this).hasClass('flipEnable')) {
         $(this).toggleClass('flipped');
     }
 
@@ -171,7 +158,7 @@ $guessBtn.click(function () {
 
     if (guessWords == upperCaseAnswer) {
         var bonus = prize + 500;
-        $promptHolder.html("CONGRATZ!!! YOU WON PRIZE + Bonus. You go home with " + bonus);
+        $promptHolder.html("Congraz!! You won: "+"<font color='blue'><strong> $"+ convertToCur(bonus)+"</strong> </font>");
         //Flips all
         $('.card').addClass('flipped');
         //Change color
@@ -214,6 +201,13 @@ function genAlphabet() {
         var $alphabetBox = $("<div class='alphabetBox'></div>").text((i + 10).toString(36).toUpperCase());
         $alphabetBoxesHolder.append($alphabetBox);
     }
+}
+
+// funct to convert from int to currency
+function convertToCur(intNum) {
+    var curVal = intNum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    //return currency value
+    return curVal
 }
 
 // function calPoints(round, prize) {
